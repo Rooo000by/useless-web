@@ -20,6 +20,7 @@
       user-select: none;
       overflow: hidden;
       transition: background-color 0.2s ease;
+      position: relative;
     }
     #fact {
       max-width: 500px;
@@ -35,6 +36,7 @@
         0 0 20px lime,
         0 0 40px lime;
       transition: all 0.1s ease;
+      z-index: 10;
     }
     .buttons {
       display: flex;
@@ -44,6 +46,7 @@
       justify-content: center;
       margin-bottom: 20px;
       position: relative;
+      z-index: 10;
     }
     button {
       background: lime;
@@ -77,6 +80,8 @@
       color: #0f0;
       margin-bottom: 15px;
       text-shadow: 0 0 7px #0f0;
+      position: relative;
+      z-index: 10;
     }
     footer {
       position: fixed;
@@ -87,6 +92,7 @@
       text-shadow: 0 0 7px #080;
       font-weight: 700;
       user-select: none;
+      z-index: 10;
     }
 
     /* Wacky animations */
@@ -166,6 +172,32 @@
       animation: vanish 1s ease forwards;
     }
 
+    /* DVD Logo Styles */
+    #dvd-logo {
+      position: fixed;
+      width: 120px;
+      height: 60px;
+      background: linear-gradient(45deg, lime, #0f0, lime);
+      border: 3px solid lime;
+      border-radius: 15px;
+      font-family: 'Comic Neue', cursive, monospace;
+      font-weight: 900;
+      font-size: 1.3rem;
+      color: black;
+      text-align: center;
+      line-height: 60px;
+      user-select: none;
+      text-shadow:
+        0 0 3px #0f0,
+        0 0 10px #0f0,
+        0 0 20px #0f0;
+      z-index: 9999;
+      cursor: default;
+      box-shadow:
+        0 0 10px lime,
+        0 0 20px lime,
+        0 0 40px lime;
+    }
   </style>
 </head>
 <body>
@@ -185,6 +217,8 @@
   <div id="counter">Clicks: 0</div>
 
   <footer>WARNING: Extreme brainrot zone. Refresh to reset your sanity.</footer>
+
+  <div id="dvd-logo">DVD</div>
 
 <script>
   // Useless facts overload
@@ -215,6 +249,8 @@
   const counterEl = document.getElementById('counter');
   const buttonsContainer = document.getElementById('buttons-container');
   const body = document.body;
+
+  const dvdLogo = document.getElementById('dvd-logo');
 
   let clicks = 0;
 
@@ -409,6 +445,73 @@
     }
   }, 3000);
 
+
+  // DVD LOGO BOUNCE
+
+  const dvd = dvdLogo;
+  let pos = { x: 100, y: 100 };
+  let velocity = { x: 3 + Math.random() * 3, y: 3 + Math.random() * 3 };
+  const dvdWidth = dvd.offsetWidth;
+  const dvdHeight = dvd.offsetHeight;
+
+  // Random neon colors for bounce
+  function randomNeonColor() {
+    const colors = [
+      'lime', 'cyan', 'magenta', 'yellow', 'orange', 'limegreen', 'deepskyblue', 'hotpink'
+    ];
+    return colors[Math.floor(Math.random() * colors.length)];
+  }
+
+  function updateDVDPosition() {
+    const maxX = window.innerWidth - dvdWidth;
+    const maxY = window.innerHeight - dvdHeight;
+
+    pos.x += velocity.x;
+    pos.y += velocity.y;
+
+    let bounced = false;
+
+    if (pos.x <= 0) {
+      pos.x = 0;
+      velocity.x = -velocity.x;
+      bounced = true;
+    }
+    if (pos.x >= maxX) {
+      pos.x = maxX;
+      velocity.x = -velocity.x;
+      bounced = true;
+    }
+    if (pos.y <= 0) {
+      pos.y = 0;
+      velocity.y = -velocity.y;
+      bounced = true;
+    }
+    if (pos.y >= maxY) {
+      pos.y = maxY;
+      velocity.y = -velocity.y;
+      bounced = true;
+    }
+
+    dvd.style.left = pos.x + 'px';
+    dvd.style.top = pos.y + 'px';
+
+    if (bounced) {
+      dvd.style.borderColor = randomNeonColor();
+      dvd.style.boxShadow = `0 0 15px ${dvd.style.borderColor}, 0 0 40px ${dvd.style.borderColor}`;
+      dvd.style.color = dvd.style.borderColor;
+      playBeep(700 + Math.random() * 500, 100);
+    }
+
+    requestAnimationFrame(updateDVDPosition);
+  }
+
+  // Initialize position & start animation
+  dvd.style.left = pos.x + 'px';
+  dvd.style.top = pos.y + 'px';
+
+  updateDVDPosition();
+
 </script>
+
 </body>
 </html>
