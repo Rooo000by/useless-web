@@ -1,94 +1,144 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 <head>
   <meta charset="UTF-8" />
-  <title>GOOFY MAXXX BRAINROT</title>
+  <title>GOOFBOMB NUCLEAR 🌋💥</title>
   <style>
     html, body {
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
+      margin: 0; padding: 0; overflow: hidden;
       background: black;
       font-family: 'Comic Sans MS', cursive;
       user-select: none;
-    }
-
-    #clicks {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      font-size: 2rem;
       color: lime;
-      z-index: 1000;
-      text-shadow: 0 0 10px lime;
+      transition: filter 0.2s ease;
     }
-
+    #clicks {
+      position: fixed;
+      top: 10px; left: 10px;
+      font-size: 3rem;
+      z-index: 99999;
+      text-shadow: 0 0 15px lime;
+      pointer-events: none;
+    }
     .dvd {
       position: absolute;
-      width: 100px;
-      height: 50px;
+      width: 100px; height: 50px;
       background: lime;
       color: black;
       font-weight: bold;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      display: flex; justify-content: center; align-items: center;
       border: 3px solid white;
       border-radius: 10px;
-      box-shadow: 0 0 20px lime;
-      animation: spin 4s linear infinite;
+      box-shadow: 0 0 30px lime;
+      animation: spin 3s linear infinite;
+      z-index: 1000;
+      user-select: none;
+      pointer-events: none;
     }
-
     .hotdog {
       position: absolute;
       width: 80px;
       height: auto;
+      z-index: 999;
       pointer-events: none;
+      user-select: none;
     }
-
-    @keyframes spin {
-      0% { transform: rotate(0); }
-      100% { transform: rotate(360deg); }
-    }
-
-    @keyframes explosion {
-      0% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(2); opacity: 0.5; }
-      100% { transform: scale(0); opacity: 0; }
-    }
-
     .explode {
       position: absolute;
-      width: 100px;
-      height: 100px;
+      width: 120px; height: 120px;
       background: radial-gradient(circle, red, yellow, white);
       border-radius: 50%;
       animation: explosion 0.5s ease-out forwards;
       pointer-events: none;
-      z-index: 9999;
+      z-index: 99999;
+      user-select: none;
     }
-
-    audio {
-      display: none;
+    .firework {
+      position: absolute;
+      width: 12px; height: 12px;
+      background: white;
+      border-radius: 50%;
+      box-shadow:
+        0 -18px white,
+        12px -12px white,
+        18px 0 white,
+        12px 12px white,
+        0 18px white,
+        -12px 12px white,
+        -18px 0 white,
+        -12px -12px white;
+      animation: firework 1s ease forwards;
+      pointer-events: none;
+      opacity: 1;
+      z-index: 999999;
+      user-select: none;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0); }
+      100% { transform: rotate(360deg); }
+    }
+    @keyframes explosion {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(3); opacity: 0.6; }
+      100% { transform: scale(0); opacity: 0; }
+    }
+    @keyframes firework {
+      to { opacity: 0; transform: scale(4); }
+    }
+    .meme {
+      position: absolute;
+      width: 90px;
+      height: auto;
+      animation: spin 4s linear infinite;
+      pointer-events: none;
+      z-index: 9999;
+      user-select: none;
+    }
+    .spaghetti {
+      position: absolute;
+      font-size: 3rem;
+      pointer-events: none;
+      user-select: none;
+      animation: floatUp 2s ease forwards;
+      color: #FF6;
+      text-shadow: 0 0 10px #FFA500;
+    }
+    @keyframes floatUp {
+      to {
+        transform: translateY(-100px);
+        opacity: 0;
+      }
     }
   </style>
 </head>
 <body>
   <div id="clicks">Clicks: 0</div>
-  <audio id="rick" src="https://www.myinstants.com/media/sounds/rickroll.mp3" autoplay loop></audio>
+
+  <audio id="rick" src="https://www.myinstants.com/media/sounds/rickroll.mp3" loop></audio>
+  <audio id="airhorn" src="https://www.myinstants.com/media/sounds/airhorn.mp3"></audio>
 
   <script>
     const body = document.body;
-    const clickDisplay = document.getElementById('clicks');
+    const clicksEl = document.getElementById('clicks');
     const rick = document.getElementById('rick');
-    rick.pause(); // start paused
+    const airhorn = document.getElementById('airhorn');
+    rick.pause();
 
     let clickCount = 0;
     let dvds = [];
-    let chaosLevel = 0;
-    const hotdogs = [];
+    let hotdogs = [];
+    let memes = [];
+    let spaghettiArray = [];
+    let glitchInterval = null;
 
     const colors = ['lime', 'cyan', 'magenta', 'yellow', 'red', 'orange', 'deeppink'];
+    const memeUrls = [
+      'https://i.imgur.com/1Xq0zqU.gif', // spinning spaghetti
+      'https://i.imgur.com/AbX0vET.gif', // dancing cat
+      'https://i.imgur.com/V3x6QOT.gif', // weird face
+      'https://i.imgur.com/1azbD0H.gif', // popcorn
+      'https://media.tenor.com/Fd5TbkIoODkAAAAi/dancing-hotdog.gif'
+    ];
 
     function beep(freq = 500) {
       const ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -108,19 +158,46 @@
       dvd.classList.add('dvd');
       dvd.textContent = 'DVD';
       body.appendChild(dvd);
-
       const obj = { el: dvd, x, y, dx, dy };
       dvds.push(obj);
     }
 
-    function createHotdog() {
+    function createHotdog(x = null, y = null) {
       const img = document.createElement('img');
       img.src = 'https://media.tenor.com/Fd5TbkIoODkAAAAi/dancing-hotdog.gif';
       img.classList.add('hotdog');
-      img.style.left = Math.random() * window.innerWidth + 'px';
-      img.style.top = Math.random() * window.innerHeight + 'px';
+      img.style.left = (x !== null ? x : Math.random() * window.innerWidth) + 'px';
+      img.style.top = (y !== null ? y : Math.random() * window.innerHeight) + 'px';
       body.appendChild(img);
-      hotdogs.push(img);
+      hotdogs.push({el: img, chasing: false});
+    }
+
+    function createMeme() {
+      const img = document.createElement('img');
+      img.src = memeUrls[Math.floor(Math.random() * memeUrls.length)];
+      img.classList.add('meme');
+      img.style.left = Math.random() * (window.innerWidth - 90) + 'px';
+      img.style.top = Math.random() * (window.innerHeight - 90) + 'px';
+      body.appendChild(img);
+      memes.push(img);
+      setTimeout(() => {
+        img.remove();
+        memes = memes.filter(m => m !== img);
+      }, 15000);
+    }
+
+    function createSpaghetti(x, y) {
+      const spag = document.createElement('div');
+      spag.classList.add('spaghetti');
+      spag.textContent = '🍝';
+      spag.style.left = x + 'px';
+      spag.style.top = y + 'px';
+      body.appendChild(spag);
+      spaghettiArray.push(spag);
+      setTimeout(() => {
+        spag.remove();
+        spaghettiArray = spaghettiArray.filter(s => s !== spag);
+      }, 2000);
     }
 
     function updateDVDs() {
@@ -143,69 +220,129 @@
         dvd.el.style.left = dvd.x + 'px';
         dvd.el.style.top = dvd.y + 'px';
       });
-
       requestAnimationFrame(updateDVDs);
     }
 
     function bounce(dvd) {
       const color = colors[Math.floor(Math.random() * colors.length)];
       dvd.el.style.background = color;
-      dvd.el.style.boxShadow = `0 0 20px ${color}`;
+      dvd.el.style.boxShadow = `0 0 30px ${color}`;
       beep(400 + Math.random() * 600);
     }
 
     function explode(x, y) {
       const boom = document.createElement('div');
       boom.className = 'explode';
-      boom.style.left = `${x - 50}px`;
-      boom.style.top = `${y - 50}px`;
+      boom.style.left = `${x - 60}px`;
+      boom.style.top = `${y - 60}px`;
       body.appendChild(boom);
       setTimeout(() => boom.remove(), 500);
     }
 
+    function createFirework(x, y) {
+      const fw = document.createElement('div');
+      fw.className = 'firework';
+      fw.style.left = `${x}px`;
+      fw.style.top = `${y}px`;
+      body.appendChild(fw);
+      setTimeout(() => fw.remove(), 1000);
+    }
+
     function mouseTrail(e) {
-      const trail = document.createElement('div');
-      trail.textContent = '🍝';
-      trail.style.position = 'absolute';
-      trail.style.left = e.pageX + 'px';
-      trail.style.top = e.pageY + 'px';
-      trail.style.fontSize = '2rem';
-      trail.style.pointerEvents = 'none';
-      body.appendChild(trail);
-      setTimeout(() => trail.remove(), 300);
+      createSpaghetti(e.pageX, e.pageY);
+    }
+
+    function glitchScreen() {
+      const invert = Math.random() < 0.5;
+      if(invert) {
+        body.style.filter = 'invert(1) hue-rotate(180deg)';
+      } else {
+        body.style.filter = '';
+      }
+    }
+
+    function moveHotdogsTowardCursor(x, y) {
+      hotdogs.forEach(h => {
+        let el = h.el;
+        let rect = el.getBoundingClientRect();
+        let hx = rect.left;
+        let hy = rect.top;
+
+        let dx = x - hx;
+        let dy = y - hy;
+        let dist = Math.sqrt(dx*dx + dy*dy);
+
+        if(dist > 5) {
+          let stepX = dx / dist * 4;
+          let stepY = dy / dist * 4;
+          el.style.left = (hx + stepX) + 'px';
+          el.style.top = (hy + stepY) + 'px';
+        }
+      });
+    }
+
+    function randomAirhornBlast() {
+      if(Math.random() < 0.1) {
+        airhorn.currentTime = 0;
+        airhorn.play().catch(() => {});
+      }
     }
 
     // Start with 1 DVD
     createDVD();
     updateDVDs();
 
-    // CLICK EVENT
-    body.addEventListener('click', e => {
+    let lastClick = 0;
+
+    document.body.addEventListener('click', e => {
       clickCount++;
-      clickDisplay.textContent = `Clicks: ${clickCount}`;
+      clicksEl.textContent = `Clicks: ${clickCount}`;
+
       explode(e.pageX, e.pageY);
 
-      // Double DVDs
-      const newDvds = [];
-      dvds.forEach(old => {
-        const dx = (Math.random() * 4 - 2) || 2;
-        const dy = (Math.random() * 4 - 2) || 2;
-        createDVD(old.x, old.y, dx, dy);
-      });
-
-      // Add a hotdog every 3 clicks
-      if (clickCount % 3 === 0) {
-        createHotdog();
+      // Double DVDs (maximum 256 to not crash browser)
+      if(dvds.length < 256) {
+        dvds.forEach(old => {
+          const dx = (Math.random() * 4 - 2) || 2;
+          const dy = (Math.random() * 4 - 2) || 2;
+          createDVD(old.x, old.y, dx, dy);
+        });
       }
 
-      // RICK TIME
-      if (clickCount >= 5 && rick.paused) {
-        rick.play().catch(() => {}); // browsers block autoplay
+      // Add hotdog every 2 clicks
+      if(clickCount % 2 === 0) createHotdog(e.pageX, e.pageY);
+
+      // Add spinning meme every 3 clicks
+      if(clickCount % 3 === 0) createMeme();
+
+      // Start Rick Astley at 5 clicks
+      if(clickCount >= 5 && rick.paused) {
+        rick.play().catch(() => {});
+      }
+
+      // Airhorn on EVERY click + random extra blast
+      airhorn.currentTime = 0;
+      airhorn.play().catch(() => {});
+      randomAirhornBlast();
+
+      // Alert if too goofy
+      if(clickCount === 100) {
+        alert('⚠️ YOU HAVE GOOFED TOO HARD ⚠️');
+      }
+
+      // Easter egg if survive 200 clicks
+      if(clickCount === 200) {
+        alert('🎉 YOU SURVIVED THE GOOFBOMB NUCLEAR! 🎉');
       }
     });
 
-    // MOUSE TRAIL
-    document.addEventListener('mousemove', mouseTrail);
+    document.addEventListener('mousemove', e => {
+      mouseTrail(e);
+      createFirework(e.pageX, e.pageY);
+      moveHotdogsTowardCursor(e.pageX, e.pageY);
+    });
+
+    glitchInterval = setInterval(glitchScreen, 200);
   </script>
 </body>
 </html>
