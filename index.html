@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Useless Website - Now with buttons!</title>
+<title>Ultimate Useless Website with Random Events</title>
 <style>
   body {
     background: #222;
@@ -16,7 +16,7 @@
     align-items: center;
     text-align: center;
     margin: 0;
-    transition: background-color 0.5s ease;
+    transition: background-color 0.5s ease, transform 1s ease;
   }
   #fact {
     max-width: 400px;
@@ -26,6 +26,7 @@
     border-radius: 10px;
     user-select: none;
     margin-bottom: 30px;
+    transition: font-size 0.5s ease;
   }
   .buttons {
     display: flex;
@@ -33,6 +34,7 @@
     flex-wrap: wrap;
     justify-content: center;
     margin-bottom: 20px;
+    max-width: 600px;
   }
   button {
     background: #444;
@@ -77,17 +79,38 @@
     filter: invert(1);
     transition: filter 0.5s ease;
   }
+
+  /* Spin animation */
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  .spin {
+    animation: spin 1s linear forwards;
+  }
+
+  /* Flash white background */
+  .flash {
+    animation: flashWhite 0.3s ease forwards;
+  }
+  @keyframes flashWhite {
+    0% { background-color: white; }
+    100% { background-color: inherit; }
+  }
 </style>
 </head>
 <body>
   <div id="fact">Loading a useless fact...</div>
 
-  <div class="buttons">
+  <div class="buttons" id="buttons-container">
     <button id="btn-color">Make Background Random</button>
     <button id="btn-wiggle">Wiggle the Fact</button>
     <button id="btn-invert">Invert Colors (Briefly)</button>
     <button id="btn-alert">Pointless Alert</button>
     <button id="btn-newfact">New Useless Fact</button>
+    <button id="btn-fontsize">Random Font Size</button>
+    <button id="btn-shuffle">Shuffle Buttons</button>
+    <button id="btn-spin">Spin The Page</button>
   </div>
 
   <div id="counter">Useless clicks: 0</div>
@@ -105,11 +128,23 @@
     "Sharks existed before trees.",
     "Sloths can hold their breath longer than dolphins.",
     "There’s a species of jellyfish that is immortal.",
-    "The longest hiccuping spree lasted 68 years."
+    "The longest hiccuping spree lasted 68 years.",
+    "A crocodile can't stick its tongue out.",
+    "Polar bears have black skin under their white fur.",
+    "Koalas sleep up to 22 hours a day.",
+    "The Eiffel Tower can be 15 cm taller during hot days.",
+    "Butterflies taste with their feet.",
+    "Cats have fewer toes on their back paws.",
+    "A group of crows is called a murder.",
+    "Humans share 60% of their DNA with bananas.",
+    "Cows have best friends and get stressed when separated.",
+    "A single strand of spaghetti is called a spaghetto."
   ];
 
   const factEl = document.getElementById('fact');
   const counterEl = document.getElementById('counter');
+  const buttonsContainer = document.getElementById('buttons-container');
+  const body = document.body;
 
   let uselessClicks = 0;
 
@@ -118,7 +153,6 @@
   }
 
   function randomColor() {
-    // Generate a pastel-ish random color
     const r = Math.floor(Math.random() * 128 + 127);
     const g = Math.floor(Math.random() * 128 + 127);
     const b = Math.floor(Math.random() * 128 + 127);
@@ -130,13 +164,26 @@
     counterEl.textContent = `Useless clicks: ${uselessClicks}`;
   }
 
+  function randomFontSize() {
+    return (Math.random() * 2 + 1).toFixed(2) + 'rem';
+  }
+
+  function shuffleButtons() {
+    // Fisher-Yates shuffle
+    for (let i = buttonsContainer.children.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      buttonsContainer.insertBefore(buttonsContainer.children[j], buttonsContainer.children[i]);
+    }
+  }
+
   // Initial fact load
   factEl.textContent = getRandomFact();
 
-  // Buttons
+  // Button event listeners
+
   document.getElementById('btn-color').addEventListener('click', () => {
     incrementClicks();
-    document.body.style.backgroundColor = randomColor();
+    body.style.backgroundColor = randomColor();
   });
 
   document.getElementById('btn-wiggle').addEventListener('click', () => {
@@ -147,9 +194,9 @@
 
   document.getElementById('btn-invert').addEventListener('click', () => {
     incrementClicks();
-    document.body.classList.add('invert');
+    body.classList.add('invert');
     setTimeout(() => {
-      document.body.classList.remove('invert');
+      body.classList.remove('invert');
     }, 1000);
   });
 
@@ -162,6 +209,82 @@
     incrementClicks();
     factEl.textContent = getRandomFact();
   });
+
+  document.getElementById('btn-fontsize').addEventListener('click', () => {
+    incrementClicks();
+    factEl.style.fontSize = randomFontSize();
+  });
+
+  document.getElementById('btn-shuffle').addEventListener('click', () => {
+    incrementClicks();
+    shuffleButtons();
+  });
+
+  document.getElementById('btn-spin').addEventListener('click', () => {
+    incrementClicks();
+    body.classList.add('spin');
+    setTimeout(() => {
+      body.classList.remove('spin');
+    }, 1000);
+  });
+
+  // RANDOM TRIGGERED EVENTS
+  const randomEvents = [
+    () => {
+      // Flash white background briefly
+      body.classList.add('flash');
+      setTimeout(() => body.classList.remove('flash'), 300);
+      console.log("Flash!");
+    },
+    () => {
+      // Auto wiggle fact
+      factEl.classList.add('wiggle');
+      setTimeout(() => factEl.classList.remove('wiggle'), 1500);
+      console.log("Auto wiggle!");
+    },
+    () => {
+      // Auto shuffle buttons
+      shuffleButtons();
+      console.log("Auto shuffle buttons!");
+    },
+    () => {
+      // Auto invert colors briefly
+      body.classList.add('invert');
+      setTimeout(() => body.classList.remove('invert'), 1000);
+      console.log("Auto invert colors!");
+    },
+    () => {
+      // Surprise alert (goofy message)
+      alert("Surprise! This alert is totally useless and randomly triggered.");
+    },
+    () => {
+      // Change font size randomly
+      factEl.style.fontSize = randomFontSize();
+      console.log("Auto font size change!");
+    },
+    () => {
+      // Spin the page
+      body.classList.add('spin');
+      setTimeout(() => body.classList.remove('spin'), 1000);
+      console.log("Auto spin!");
+    }
+  ];
+
+  function triggerRandomEvent() {
+    const eventIndex = Math.floor(Math.random() * randomEvents.length);
+    randomEvents[eventIndex]();
+  }
+
+  function scheduleRandomEvent() {
+    const interval = Math.random() * 15000 + 10000; // 10-25 seconds
+    setTimeout(() => {
+      triggerRandomEvent();
+      scheduleRandomEvent();
+    }, interval);
+  }
+
+  // Start the random nonsense
+  scheduleRandomEvent();
 </script>
 </body>
 </html>
