@@ -1,517 +1,211 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Ultimate Brainrot Goofy Goober Useless Website</title>
+  <title>GOOFY MAXXX BRAINROT</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap');
-    body {
-      background: black;
-      color: lime;
-      font-family: 'Comic Neue', cursive, monospace;
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
+    html, body {
       margin: 0;
-      user-select: none;
+      padding: 0;
       overflow: hidden;
-      transition: background-color 0.2s ease;
-      position: relative;
+      background: black;
+      font-family: 'Comic Sans MS', cursive;
+      user-select: none;
     }
-    #fact {
-      max-width: 500px;
+
+    #clicks {
+      position: absolute;
+      top: 10px;
+      left: 10px;
       font-size: 2rem;
-      padding: 25px;
-      border: 5px dotted lime;
-      border-radius: 15px;
-      margin-bottom: 30px;
-      position: relative;
-      text-shadow:
-        0 0 5px lime,
-        0 0 10px lime,
-        0 0 20px lime,
-        0 0 40px lime;
-      transition: all 0.1s ease;
-      z-index: 10;
+      color: lime;
+      z-index: 1000;
+      text-shadow: 0 0 10px lime;
     }
-    .buttons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      max-width: 800px;
-      justify-content: center;
-      margin-bottom: 20px;
-      position: relative;
-      z-index: 10;
-    }
-    button {
+
+    .dvd {
+      position: absolute;
+      width: 100px;
+      height: 50px;
       background: lime;
       color: black;
-      border: 3px solid black;
-      border-radius: 25px;
-      padding: 15px 25px;
-      font-weight: 900;
-      font-size: 1.1rem;
-      cursor: pointer;
-      text-transform: uppercase;
-      user-select: none;
-      box-shadow:
-        0 0 10px lime,
-        0 0 20px lime;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
-      position: relative;
-      overflow: visible;
-    }
-    button:hover {
-      box-shadow:
-        0 0 30px yellow,
-        0 0 50px yellow;
-      transform: scale(1.1) rotate(10deg);
+      font-weight: bold;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 3px solid white;
+      border-radius: 10px;
+      box-shadow: 0 0 20px lime;
+      animation: spin 4s linear infinite;
     }
 
-    #counter {
-      font-size: 1.3rem;
-      font-weight: 900;
-      letter-spacing: 0.1em;
-      color: #0f0;
-      margin-bottom: 15px;
-      text-shadow: 0 0 7px #0f0;
-      position: relative;
-      z-index: 10;
-    }
-    footer {
-      position: fixed;
-      bottom: 10px;
-      width: 100%;
-      color: #080;
-      font-size: 0.9rem;
-      text-shadow: 0 0 7px #080;
-      font-weight: 700;
-      user-select: none;
-      z-index: 10;
-    }
-
-    /* Wacky animations */
-
-    @keyframes wiggle {
-      0%, 100% { transform: rotate(0deg); }
-      25% { transform: rotate(15deg); }
-      50% { transform: rotate(-15deg); }
-      75% { transform: rotate(15deg); }
-    }
-    .wiggle {
-      animation: wiggle 0.4s ease-in-out 6;
+    .hotdog {
+      position: absolute;
+      width: 80px;
+      height: auto;
+      pointer-events: none;
     }
 
     @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(720deg); }
-    }
-    .spin {
-      animation: spin 1.5s linear forwards;
+      0% { transform: rotate(0); }
+      100% { transform: rotate(360deg); }
     }
 
-    @keyframes flash {
-      0% { background-color: #fff; color: black; }
-      100% { background-color: black; color: lime; }
-    }
-    .flash {
-      animation: flash 0.3s ease forwards;
+    @keyframes explosion {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(2); opacity: 0.5; }
+      100% { transform: scale(0); opacity: 0; }
     }
 
-    @keyframes glitch {
-      0% {
-        clip-path: inset(0 0 0 0);
-        transform: translate(0);
-      }
-      20% {
-        clip-path: inset(10% 0 20% 0);
-        transform: translate(-5px, 5px);
-      }
-      40% {
-        clip-path: inset(20% 0 10% 0);
-        transform: translate(5px, -5px);
-      }
-      60% {
-        clip-path: inset(10% 0 15% 0);
-        transform: translate(-5px, 5px);
-      }
-      80% {
-        clip-path: inset(0 0 0 0);
-        transform: translate(0);
-      }
-      100% {
-        clip-path: inset(0 0 0 0);
-        transform: translate(0);
-      }
-    }
-    .glitch {
-      animation: glitch 0.7s ease-in-out 3;
-    }
-
-    /* Jump animation for buttons */
-    @keyframes jump {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-20px); }
-    }
-    .jump {
-      animation: jump 0.6s ease-in-out 4;
-    }
-
-    /* Random vanish and reappear */
-    @keyframes vanish {
-      0% { opacity: 1; }
-      50% { opacity: 0; }
-      100% { opacity: 1; }
-    }
-    .vanish {
-      animation: vanish 1s ease forwards;
-    }
-
-    /* DVD Logo Styles */
-    #dvd-logo {
-      position: fixed;
-      width: 120px;
-      height: 60px;
-      background: linear-gradient(45deg, lime, #0f0, lime);
-      border: 3px solid lime;
-      border-radius: 15px;
-      font-family: 'Comic Neue', cursive, monospace;
-      font-weight: 900;
-      font-size: 1.3rem;
-      color: black;
-      text-align: center;
-      line-height: 60px;
-      user-select: none;
-      text-shadow:
-        0 0 3px #0f0,
-        0 0 10px #0f0,
-        0 0 20px #0f0;
+    .explode {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      background: radial-gradient(circle, red, yellow, white);
+      border-radius: 50%;
+      animation: explosion 0.5s ease-out forwards;
+      pointer-events: none;
       z-index: 9999;
-      cursor: default;
-      box-shadow:
-        0 0 10px lime,
-        0 0 20px lime,
-        0 0 40px lime;
+    }
+
+    audio {
+      display: none;
     }
   </style>
 </head>
 <body>
-  <div id="fact">Loading brainrot nonsense...</div>
+  <div id="clicks">Clicks: 0</div>
+  <audio id="rick" src="https://www.myinstants.com/media/sounds/rickroll.mp3" autoplay loop></audio>
 
-  <div class="buttons" id="buttons-container">
-    <button id="btn-color">Random Background</button>
-    <button id="btn-wiggle">Wiggle Fact</button>
-    <button id="btn-invert">Invert Colors</button>
-    <button id="btn-alert">Goofy Alert</button>
-    <button id="btn-newfact">New Fact</button>
-    <button id="btn-fontsize">Random Font Size</button>
-    <button id="btn-shuffle">Shuffle Buttons</button>
-    <button id="btn-spin">Spin Page</button>
-  </div>
+  <script>
+    const body = document.body;
+    const clickDisplay = document.getElementById('clicks');
+    const rick = document.getElementById('rick');
+    rick.pause(); // start paused
 
-  <div id="counter">Clicks: 0</div>
+    let clickCount = 0;
+    let dvds = [];
+    let chaosLevel = 0;
+    const hotdogs = [];
 
-  <footer>WARNING: Extreme brainrot zone. Refresh to reset your sanity.</footer>
+    const colors = ['lime', 'cyan', 'magenta', 'yellow', 'red', 'orange', 'deeppink'];
 
-  <div id="dvd-logo">DVD</div>
-
-<script>
-  // Useless facts overload
-  const facts = [
-    "Bananas are berries, but strawberries aren't.",
-    "Octopuses have three hearts.",
-    "Honey never spoils.",
-    "A group of flamingos is called a 'flamboyance'.",
-    "Wombat poop is cube-shaped.",
-    "Sea otters hold hands when they sleep.",
-    "Sharks existed before trees.",
-    "Sloths can hold their breath longer than dolphins.",
-    "There’s a species of jellyfish that is immortal.",
-    "The longest hiccuping spree lasted 68 years.",
-    "A crocodile can't stick its tongue out.",
-    "Polar bears have black skin under their white fur.",
-    "Koalas sleep up to 22 hours a day.",
-    "The Eiffel Tower can be 15 cm taller during hot days.",
-    "Butterflies taste with their feet.",
-    "Cats have fewer toes on their back paws.",
-    "A group of crows is called a murder.",
-    "Humans share 60% of their DNA with bananas.",
-    "Cows have best friends and get stressed when separated.",
-    "A single strand of spaghetti is called a spaghetto."
-  ];
-
-  const factEl = document.getElementById('fact');
-  const counterEl = document.getElementById('counter');
-  const buttonsContainer = document.getElementById('buttons-container');
-  const body = document.body;
-
-  const dvdLogo = document.getElementById('dvd-logo');
-
-  let clicks = 0;
-
-  // Sound effect generator (simple beep tones)
-  function playBeep(freq = 440, duration = 150) {
-    try {
-      const AudioContext = window.AudioContext || window.webkitAudioContext;
-      const audioCtx = new AudioContext();
-      const oscillator = audioCtx.createOscillator();
-      const gainNode = audioCtx.createGain();
-
-      oscillator.connect(gainNode);
-      gainNode.connect(audioCtx.destination);
-
-      oscillator.type = 'square';
-      oscillator.frequency.value = freq;
-
-      oscillator.start();
-      gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
-      gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration / 1000);
-
-      oscillator.stop(audioCtx.currentTime + duration / 1000 + 0.02);
-
-      oscillator.onended = () => audioCtx.close();
-    } catch {
-      // No sound in some browsers or contexts
+    function beep(freq = 500) {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.type = 'square';
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(0.05, ctx.currentTime);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.1);
     }
-  }
 
-  function getRandomFact() {
-    return facts[Math.floor(Math.random() * facts.length)];
-  }
+    function createDVD(x = 100, y = 100, dx = 2, dy = 2) {
+      const dvd = document.createElement('div');
+      dvd.classList.add('dvd');
+      dvd.textContent = 'DVD';
+      body.appendChild(dvd);
 
-  function randomColor() {
-    const r = Math.floor(Math.random() * 256);
-    const g = Math.floor(Math.random() * 256);
-    const b = Math.floor(Math.random() * 256);
-    return `rgb(${r},${g},${b})`;
-  }
-
-  function randomFontSize() {
-    return (Math.random() * 3 + 1).toFixed(2) + 'rem';
-  }
-
-  function incrementClicks() {
-    clicks++;
-    counterEl.textContent = `Clicks: ${clicks}`;
-  }
-
-  function shuffleButtons() {
-    const buttons = [...buttonsContainer.children];
-    for (let i = buttons.length -1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      buttonsContainer.insertBefore(buttons[j], buttons[i]);
+      const obj = { el: dvd, x, y, dx, dy };
+      dvds.push(obj);
     }
-  }
 
-  function randomButtonChaos() {
-    // Randomly pick buttons to wiggle, jump, vanish and reappear, or spin
-    const btns = [...buttonsContainer.children];
-    btns.forEach(btn => {
-      const chaos = Math.random();
-      btn.style.transition = "transform 0.3s ease, opacity 0.3s ease";
+    function createHotdog() {
+      const img = document.createElement('img');
+      img.src = 'https://media.tenor.com/Fd5TbkIoODkAAAAi/dancing-hotdog.gif';
+      img.classList.add('hotdog');
+      img.style.left = Math.random() * window.innerWidth + 'px';
+      img.style.top = Math.random() * window.innerHeight + 'px';
+      body.appendChild(img);
+      hotdogs.push(img);
+    }
 
-      if (chaos < 0.2) {
-        btn.classList.add('wiggle');
-        setTimeout(() => btn.classList.remove('wiggle'), 1000);
-      } else if (chaos < 0.4) {
-        btn.classList.add('jump');
-        setTimeout(() => btn.classList.remove('jump'), 1200);
-      } else if (chaos < 0.6) {
-        btn.classList.add('vanish');
-        setTimeout(() => btn.classList.remove('vanish'), 1200);
-      } else if (chaos < 0.8) {
-        btn.style.transform = `rotate(${Math.random() * 360}deg) scale(${Math.random() + 0.5})`;
-        setTimeout(() => btn.style.transform = "", 1000);
-      } else {
-        btn.style.color = `rgb(${Math.floor(Math.random()*256)},${Math.floor(Math.random()*256)},${Math.floor(Math.random()*256)})`;
-        setTimeout(() => btn.style.color = "black", 1500);
+    function updateDVDs() {
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+
+      dvds.forEach(dvd => {
+        dvd.x += dvd.dx;
+        dvd.y += dvd.dy;
+
+        if (dvd.x <= 0 || dvd.x + 100 >= w) {
+          dvd.dx *= -1;
+          bounce(dvd);
+        }
+        if (dvd.y <= 0 || dvd.y + 50 >= h) {
+          dvd.dy *= -1;
+          bounce(dvd);
+        }
+
+        dvd.el.style.left = dvd.x + 'px';
+        dvd.el.style.top = dvd.y + 'px';
+      });
+
+      requestAnimationFrame(updateDVDs);
+    }
+
+    function bounce(dvd) {
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      dvd.el.style.background = color;
+      dvd.el.style.boxShadow = `0 0 20px ${color}`;
+      beep(400 + Math.random() * 600);
+    }
+
+    function explode(x, y) {
+      const boom = document.createElement('div');
+      boom.className = 'explode';
+      boom.style.left = `${x - 50}px`;
+      boom.style.top = `${y - 50}px`;
+      body.appendChild(boom);
+      setTimeout(() => boom.remove(), 500);
+    }
+
+    function mouseTrail(e) {
+      const trail = document.createElement('div');
+      trail.textContent = '🍝';
+      trail.style.position = 'absolute';
+      trail.style.left = e.pageX + 'px';
+      trail.style.top = e.pageY + 'px';
+      trail.style.fontSize = '2rem';
+      trail.style.pointerEvents = 'none';
+      body.appendChild(trail);
+      setTimeout(() => trail.remove(), 300);
+    }
+
+    // Start with 1 DVD
+    createDVD();
+    updateDVDs();
+
+    // CLICK EVENT
+    body.addEventListener('click', e => {
+      clickCount++;
+      clickDisplay.textContent = `Clicks: ${clickCount}`;
+      explode(e.pageX, e.pageY);
+
+      // Double DVDs
+      const newDvds = [];
+      dvds.forEach(old => {
+        const dx = (Math.random() * 4 - 2) || 2;
+        const dy = (Math.random() * 4 - 2) || 2;
+        createDVD(old.x, old.y, dx, dy);
+      });
+
+      // Add a hotdog every 3 clicks
+      if (clickCount % 3 === 0) {
+        createHotdog();
+      }
+
+      // RICK TIME
+      if (clickCount >= 5 && rick.paused) {
+        rick.play().catch(() => {}); // browsers block autoplay
       }
     });
-  }
 
-  // INITIAL LOAD
-  factEl.textContent = getRandomFact();
-
-  // BUTTON EVENTS
-
-  document.getElementById('btn-color').addEventListener('click', () => {
-    incrementClicks();
-    body.style.backgroundColor = randomColor();
-    playBeep(200 + Math.random() * 1000, 150);
-  });
-
-  document.getElementById('btn-wiggle').addEventListener('click', () => {
-    incrementClicks();
-    factEl.classList.add('wiggle');
-    playBeep(800, 150);
-    setTimeout(() => factEl.classList.remove('wiggle'), 1500);
-  });
-
-  document.getElementById('btn-invert').addEventListener('click', () => {
-    incrementClicks();
-    body.classList.add('flash');
-    playBeep(600, 100);
-    setTimeout(() => body.classList.remove('flash'), 400);
-  });
-
-  document.getElementById('btn-alert').addEventListener('click', () => {
-    incrementClicks();
-    playBeep(1000, 400);
-    alert("AHHHHHHHHHHHHHHHHHHHHHHHHHHHH GOOFY GOOOBER!!!");
-  });
-
-  document.getElementById('btn-newfact').addEventListener('click', () => {
-    incrementClicks();
-    factEl.textContent = getRandomFact();
-    playBeep(500, 150);
-    factEl.classList.add('glitch');
-    setTimeout(() => factEl.classList.remove('glitch'), 1000);
-  });
-
-  document.getElementById('btn-fontsize').addEventListener('click', () => {
-    incrementClicks();
-    factEl.style.fontSize = randomFontSize();
-    playBeep(700, 150);
-  });
-
-  document.getElementById('btn-shuffle').addEventListener('click', () => {
-    incrementClicks();
-    shuffleButtons();
-    randomButtonChaos();
-    playBeep(900, 200);
-  });
-
-  document.getElementById('btn-spin').addEventListener('click', () => {
-    incrementClicks();
-    body.classList.add('spin');
-    playBeep(1200, 300);
-    setTimeout(() => body.classList.remove('spin'), 1500);
-  });
-
-  // RANDOM EVENTS MAYHEM
-
-  const randomEvents = [
-    () => {
-      body.classList.add('flash');
-      playBeep(400, 100);
-      setTimeout(() => body.classList.remove('flash'), 300);
-      console.log("Random Flash");
-    },
-    () => {
-      factEl.classList.add('wiggle');
-      playBeep(800, 120);
-      setTimeout(() => factEl.classList.remove('wiggle'), 1000);
-      console.log("Random Wiggle");
-    },
-    () => {
-      shuffleButtons();
-      randomButtonChaos();
-      playBeep(900, 250);
-      console.log("Random Shuffle + Chaos");
-    },
-    () => {
-      body.classList.add('flash');
-      playBeep(600, 120);
-      setTimeout(() => body.classList.remove('flash'), 400);
-      console.log("Random Invert Flash");
-    },
-    () => {
-      alert("BOOGA BOOGA RANDOM ALERT!!!!");
-      playBeep(1200, 500);
-    },
-    () => {
-      factEl.style.fontSize = randomFontSize();
-      playBeep(700, 120);
-      console.log("Random Font Size");
-    },
-    () => {
-      body.classList.add('spin');
-      playBeep(1000, 400);
-      setTimeout(() => body.classList.remove('spin'), 1500);
-      console.log("Random Spin");
-    },
-  ];
-
-  setInterval(() => {
-    const r = Math.random();
-    if (r < 0.3) { // 30% chance every 3 seconds of chaos
-      const eventFn = randomEvents[Math.floor(Math.random() * randomEvents.length)];
-      eventFn();
-    }
-  }, 3000);
-
-
-  // DVD LOGO BOUNCE
-
-  const dvd = dvdLogo;
-  let pos = { x: 100, y: 100 };
-  let velocity = { x: 3 + Math.random() * 3, y: 3 + Math.random() * 3 };
-  const dvdWidth = dvd.offsetWidth;
-  const dvdHeight = dvd.offsetHeight;
-
-  // Random neon colors for bounce
-  function randomNeonColor() {
-    const colors = [
-      'lime', 'cyan', 'magenta', 'yellow', 'orange', 'limegreen', 'deepskyblue', 'hotpink'
-    ];
-    return colors[Math.floor(Math.random() * colors.length)];
-  }
-
-  function updateDVDPosition() {
-    const maxX = window.innerWidth - dvdWidth;
-    const maxY = window.innerHeight - dvdHeight;
-
-    pos.x += velocity.x;
-    pos.y += velocity.y;
-
-    let bounced = false;
-
-    if (pos.x <= 0) {
-      pos.x = 0;
-      velocity.x = -velocity.x;
-      bounced = true;
-    }
-    if (pos.x >= maxX) {
-      pos.x = maxX;
-      velocity.x = -velocity.x;
-      bounced = true;
-    }
-    if (pos.y <= 0) {
-      pos.y = 0;
-      velocity.y = -velocity.y;
-      bounced = true;
-    }
-    if (pos.y >= maxY) {
-      pos.y = maxY;
-      velocity.y = -velocity.y;
-      bounced = true;
-    }
-
-    dvd.style.left = pos.x + 'px';
-    dvd.style.top = pos.y + 'px';
-
-    if (bounced) {
-      dvd.style.borderColor = randomNeonColor();
-      dvd.style.boxShadow = `0 0 15px ${dvd.style.borderColor}, 0 0 40px ${dvd.style.borderColor}`;
-      dvd.style.color = dvd.style.borderColor;
-      playBeep(700 + Math.random() * 500, 100);
-    }
-
-    requestAnimationFrame(updateDVDPosition);
-  }
-
-  // Initialize position & start animation
-  dvd.style.left = pos.x + 'px';
-  dvd.style.top = pos.y + 'px';
-
-  updateDVDPosition();
-
-</script>
-
+    // MOUSE TRAIL
+    document.addEventListener('mousemove', mouseTrail);
+  </script>
 </body>
 </html>
