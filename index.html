@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Useless Website</title>
+<style>
+  body {
+    background: #222;
+    color: #eee;
+    font-family: 'Courier New', Courier, monospace;
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 0;
+  }
+  #fact {
+    max-width: 400px;
+    font-size: 1.5rem;
+    padding: 20px;
+    border: 3px dashed #555;
+    border-radius: 10px;
+    user-select: none;
+  }
+  footer {
+    position: fixed;
+    bottom: 10px;
+    width: 100%;
+    color: #555;
+    font-size: 0.8rem;
+  }
+</style>
+</head>
+<body>
+  <div id="fact">Loading a useless fact...</div>
+  <footer>Refresh for a new useless fact</footer>
+
+<script>
+  const facts = [
+    "Bananas are berries, but strawberries aren't.",
+    "Octopuses have three hearts.",
+    "Honey never spoils.",
+    "A group of flamingos is called a 'flamboyance'.",
+    "Wombat poop is cube-shaped.",
+    "Sea otters hold hands when they sleep.",
+    "Sharks existed before trees.",
+    "Sloths can hold their breath longer than dolphins.",
+    "There’s a species of jellyfish that is immortal.",
+    "The longest hiccuping spree lasted 68 years."
+  ];
+
+  function getRandomFact() {
+    return facts[Math.floor(Math.random() * facts.length)];
+  }
+
+  document.getElementById('fact').textContent = getRandomFact();
+</script>
+</body>
+</html>
