@@ -3,18 +3,20 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Useless Website</title>
+<title>Useless Website - Now with buttons!</title>
 <style>
   body {
     background: #222;
     color: #eee;
     font-family: 'Courier New', Courier, monospace;
     display: flex;
+    flex-direction: column;
     height: 100vh;
     justify-content: center;
     align-items: center;
     text-align: center;
     margin: 0;
+    transition: background-color 0.5s ease;
   }
   #fact {
     max-width: 400px;
@@ -23,6 +25,33 @@
     border: 3px dashed #555;
     border-radius: 10px;
     user-select: none;
+    margin-bottom: 30px;
+  }
+  .buttons {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  button {
+    background: #444;
+    color: #eee;
+    border: 2px solid #666;
+    border-radius: 8px;
+    padding: 10px 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    user-select: none;
+  }
+  button:hover {
+    background-color: #666;
+  }
+  #counter {
+    font-size: 1.1rem;
+    color: #aaa;
+    margin-bottom: 15px;
   }
   footer {
     position: fixed;
@@ -31,11 +60,39 @@
     color: #555;
     font-size: 0.8rem;
   }
+
+  /* Wiggle animation */
+  @keyframes wiggle {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(5deg); }
+    50% { transform: rotate(-5deg); }
+    75% { transform: rotate(5deg); }
+  }
+  .wiggle {
+    animation: wiggle 0.5s ease-in-out 3;
+  }
+
+  /* Invert colors animation */
+  .invert {
+    filter: invert(1);
+    transition: filter 0.5s ease;
+  }
 </style>
 </head>
 <body>
   <div id="fact">Loading a useless fact...</div>
-  <footer>Refresh for a new useless fact</footer>
+
+  <div class="buttons">
+    <button id="btn-color">Make Background Random</button>
+    <button id="btn-wiggle">Wiggle the Fact</button>
+    <button id="btn-invert">Invert Colors (Briefly)</button>
+    <button id="btn-alert">Pointless Alert</button>
+    <button id="btn-newfact">New Useless Fact</button>
+  </div>
+
+  <div id="counter">Useless clicks: 0</div>
+
+  <footer>Refresh for a new useless fact (or click buttons for nonsense)</footer>
 
 <script>
   const facts = [
@@ -51,11 +108,60 @@
     "The longest hiccuping spree lasted 68 years."
   ];
 
+  const factEl = document.getElementById('fact');
+  const counterEl = document.getElementById('counter');
+
+  let uselessClicks = 0;
+
   function getRandomFact() {
     return facts[Math.floor(Math.random() * facts.length)];
   }
 
-  document.getElementById('fact').textContent = getRandomFact();
+  function randomColor() {
+    // Generate a pastel-ish random color
+    const r = Math.floor(Math.random() * 128 + 127);
+    const g = Math.floor(Math.random() * 128 + 127);
+    const b = Math.floor(Math.random() * 128 + 127);
+    return `rgb(${r},${g},${b})`;
+  }
+
+  function incrementClicks() {
+    uselessClicks++;
+    counterEl.textContent = `Useless clicks: ${uselessClicks}`;
+  }
+
+  // Initial fact load
+  factEl.textContent = getRandomFact();
+
+  // Buttons
+  document.getElementById('btn-color').addEventListener('click', () => {
+    incrementClicks();
+    document.body.style.backgroundColor = randomColor();
+  });
+
+  document.getElementById('btn-wiggle').addEventListener('click', () => {
+    incrementClicks();
+    factEl.classList.add('wiggle');
+    setTimeout(() => factEl.classList.remove('wiggle'), 1500);
+  });
+
+  document.getElementById('btn-invert').addEventListener('click', () => {
+    incrementClicks();
+    document.body.classList.add('invert');
+    setTimeout(() => {
+      document.body.classList.remove('invert');
+    }, 1000);
+  });
+
+  document.getElementById('btn-alert').addEventListener('click', () => {
+    incrementClicks();
+    alert("This alert is completely useless. Close it to continue.");
+  });
+
+  document.getElementById('btn-newfact').addEventListener('click', () => {
+    incrementClicks();
+    factEl.textContent = getRandomFact();
+  });
 </script>
 </body>
 </html>
